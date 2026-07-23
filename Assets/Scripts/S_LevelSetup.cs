@@ -10,6 +10,7 @@ public class S_LevelSetup : MonoBehaviour
          RandomiseNpcPositions();
     }
 
+    // Spawn NPCs at random positions
     private void RandomiseNpcPositions()
     {
         for (int i = 0; i < numberOfNpcs; i++)

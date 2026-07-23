@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class S_Sniper : MonoBehaviour
 {
@@ -10,16 +11,13 @@ public class S_Sniper : MonoBehaviour
 
     public S_Camera cameraScript;
 
-    public TextMeshProUGUI bulletText;
-
     private bool changeVisibility = false;
     private bool makeAimObjectsVisible = false;
     private float t = 0;
 
-    private void Start()
-    {
-        RefreshBulletUI();
-    }
+    public S_BulletCount bulletUI;
+    private Image[] bulletSprites;
+    private bool gotSprites = false;
 
     void Update()
     {
@@ -32,6 +30,7 @@ public class S_Sniper : MonoBehaviour
         // If the aiming transition is taking place
         if (changeVisibility)
         {
+            gotSprites = false;
             ColourTransitions();
         }
 
@@ -60,7 +59,7 @@ public class S_Sniper : MonoBehaviour
 
         // Trigger the opacity transition
         changeVisibility = true;
-
+        
         // Tell the camera to either follow the mouse or go back to the middle depending on if you are aiming or not
         cameraScript.Aiming(aiming);
     }
@@ -68,7 +67,7 @@ public class S_Sniper : MonoBehaviour
     private void Fire()
     {
         bullets--;
-        RefreshBulletUI();
+        bulletUI.RemoveBullet();
 
         // Cast a ray from the middle of the reticle
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero, float.PositiveInfinity, LayerMask.GetMask("Shootable"));
@@ -86,32 +85,47 @@ public class S_Sniper : MonoBehaviour
         if (Input.GetKeyDown("r"))
         {
             bullets++;
-            RefreshBulletUI();
+            bulletUI.AddBullet();
         }
     }
 
-    private void RefreshBulletUI()
-    {
-        bulletText.text = "Bullets: " + bullets;
-    }
 
     // AAHHH AVERT YOUR EYES
     // Lerps the alpha of the sprites between 1 and 0
     private void ColourTransitions()
     {
         t += Time.deltaTime;
+        if (!gotSprites)
+        {
+            bulletSprites = new Image[bullets];
 
+            for (int i = 0; i < bullets; i++)
+            {
+                bulletSprites[i] = bulletUI.transform.GetChild(i).gameObject.GetComponent<Image>();
+            }
+            gotSprites = true;
+        }
+        
+        
         if (makeAimObjectsVisible)
         {
-            reticleSprite.color = new Color(reticleSprite.color.r, reticleSprite.color.g, reticleSprite.color.b, Mathf.Lerp(reticleSprite.color.a, 1f, t));
-            backgroundSprite.color = new Color(backgroundSprite.color.r, backgroundSprite.color.g, backgroundSprite.color.b, Mathf.Lerp(backgroundSprite.color.a, 0.995f, t));
-            bulletText.color = new Color(bulletText.color.r, bulletText.color.g, bulletText.color.b, Mathf.Lerp(bulletText.color.a, 1f, t));
+            reticleSprite.color = new Color(1, 1, 1, Mathf.Lerp(reticleSprite.color.a, 1f, t));
+            backgroundSprite.color = new Color(0.463f, 0.463f, 0.463f, Mathf.Lerp(backgroundSprite.color.a, 0.995f, t));
+
+            for (int i = 0; i < bullets; i++)
+            {
+                bulletSprites[i].color = new Color(1,1,1, Mathf.Lerp(bulletSprites[i].color.a, 1, t));
+            }
         }
         else
         {
-            reticleSprite.color = new Color(reticleSprite.color.r, reticleSprite.color.g, reticleSprite.color.b, Mathf.Lerp(reticleSprite.color.a, 0f, t));
-            backgroundSprite.color = new Color(backgroundSprite.color.r, backgroundSprite.color.g, backgroundSprite.color.b, Mathf.Lerp(backgroundSprite.color.a, 0f, t));
-            bulletText.color = new Color(bulletText.color.r, bulletText.color.g, bulletText.color.b, Mathf.Lerp(bulletText.color.a, 0f, t));
+            reticleSprite.color = new Color(1, 1, 1, Mathf.Lerp(reticleSprite.color.a, 0f, t));
+            backgroundSprite.color = new Color(0.463f, 0.463f, 0.463f, Mathf.Lerp(backgroundSprite.color.a, 0f, t));
+
+            for (int i = 0; i < bullets; i++)
+            {
+                bulletSprites[i].color = new Color(1, 1, 1, Mathf.Lerp(bulletSprites[i].color.a, 0, t));
+            }
         }
 
         // Why 0.5? I don't know, but it works as intended so eh 
