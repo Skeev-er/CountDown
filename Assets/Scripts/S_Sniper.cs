@@ -59,6 +59,9 @@ public class S_Sniper : MonoBehaviour
 
         // Trigger the opacity transition
         changeVisibility = true;
+
+        // Trigger the camera zoom in S_Camera
+        cameraScript.changeZoom = true;
         
         // Tell the camera to either follow the mouse or go back to the middle depending on if you are aiming or not
         cameraScript.Aiming(aiming);
@@ -89,8 +92,6 @@ public class S_Sniper : MonoBehaviour
         }
     }
 
-
-    // AAHHH AVERT YOUR EYES
     // Lerps the alpha of the sprites between 1 and 0
     private void ColourTransitions()
     {
