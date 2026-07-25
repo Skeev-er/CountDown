@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6174929015880684795}
   - component: {fileID: 5754379392476166595}
   - component: {fileID: 2034800305204406952}
+  - component: {fileID: 7449572701318982499}
   - component: {fileID: -4802986199778335004}
   - component: {fileID: 1611239037661182775}
   - component: {fileID: -3211753328414107515}
@@ -122,7 +123,20 @@ MonoBehaviour:
   - {fileID: -2499558952833973110, guid: 7c5a5cdcc71e46647b29a48b455f1f32, type: 3}
   - {fileID: -532960962129546369, guid: 7c5a5cdcc71e46647b29a48b455f1f32, type: 3}
   isDracula: 0
-  reachedTarget: 0
+  pathfindingScript: {fileID: 7449572701318982499}
+--- !u!114 &7449572701318982499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7267800766607060013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c49b5ce305a54464da8faae97dad56cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_Pathfinding
+  allowedToMove: 1
   walkSpeed: 0.8
 --- !u!95 &-4802986199778335004
 Animator:
