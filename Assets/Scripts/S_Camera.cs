@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class S_Camera : MonoBehaviour
@@ -8,11 +9,13 @@ public class S_Camera : MonoBehaviour
     private Camera cam;
     private float t = 0;
     private bool zoomedIn = false;
+    private Rigidbody2D body;
 
     void Start()
     {
         joint = GetComponent<TargetJoint2D>();
         cam = GetComponent<Camera>();
+        body = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -61,5 +64,17 @@ public class S_Camera : MonoBehaviour
             joint.target = new Vector2(0, 0);
             joint.maxForce = 1000;
         }
+    }
+
+    public void Fired()
+    {
+        body.AddForce(transform.up * 500);
+        StartCoroutine(DelayedReturnRecoil());
+    }
+
+    IEnumerator DelayedReturnRecoil()
+    {
+        yield return new WaitForSeconds(0.3f);
+        body.AddForce(-transform.up * 100);
     }
 }

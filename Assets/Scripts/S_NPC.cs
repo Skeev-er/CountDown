@@ -10,14 +10,20 @@ public class S_NPC : MonoBehaviour
     private ParticleSystem particles;
     public S_Pathfinding pathfindingScript;
 
+    private GameObject endScreen;
+    private S_EndScreen endScreenScript;
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         collisionBox = GetComponent<PolygonCollider2D>();
         particles = GetComponent<ParticleSystem>();
 
+        endScreen = GameObject.Find("End Screen Canvas");
+        endScreenScript = endScreen.GetComponent<S_EndScreen>();
+
         // Randomise sprite if they are a civilian
-        if(!isDracula)
+        if (!isDracula)
         {
             spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
         }
@@ -51,18 +57,16 @@ public class S_NPC : MonoBehaviour
         collisionBox.enabled = false;
         particles.Play();
         pathfindingScript.allowedToMove = false;
-        
+
+        endScreenScript.NPCKilled(isDracula);
+
         // Delete self after double the input time (goes invisible after 1x intput time)
         StartCoroutine(DeleteAfterDelay(0.25f));
 
         // Output if the NPC was dracula or not
         if (isDracula)
         {
-            print("You got him");
-        }
-        else
-        {
-            print("THAT WAS A CIVVY");
+            StartCoroutine(DelayedOpenEndScreen(0.5f));
         }
     }
 
@@ -73,5 +77,11 @@ public class S_NPC : MonoBehaviour
         spriteRenderer.color = Color.clear;
         yield return new WaitForSeconds(delayTime);
         Destroy(gameObject);
+    }
+
+    IEnumerator DelayedOpenEndScreen(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        endScreenScript.OpenEndScreen();
     }
 }

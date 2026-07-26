@@ -1,10 +1,7 @@
 fileFormatVersion: 2
 guid: 3f4277285da8b3244825abbc052ffc53
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -3547598092155985744
-    second: SniperReticle_0
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 3
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SniperReticle_0
+      name: ZoomedInBackground_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 65
-        height: 65
+        width: 160
+        height: 90
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +125,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0b06037c45664cec0800000000000000
-      internalID: -3547598092155985744
+      spriteID: 1c54e6b3a21682330800000000000000
+      internalID: 3686303129016354241
       vertices: []
       indices: 
       edges: []
@@ -148,7 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SniperReticle_0: -3547598092155985744
+      ZoomedInBackground_0: 3686303129016354241
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

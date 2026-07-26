@@ -27,12 +27,19 @@ public class S_Sniper : MonoBehaviour
     private Image reloadButtonImage;
     private TextMeshProUGUI reloadButtonText;
 
+    public Image timerImage;
+    private TextMeshProUGUI timerText;
+
+    private AudioSource audioSource;
+
     private void Start()
     {
         tutorialButtonImage = tutorialButton.GetComponent<Image>();
         tutorialButtonText = tutorialButton.GetComponentInChildren<TextMeshProUGUI>();
         reloadButtonImage = reloadButton.GetComponent<Image>();
         reloadButtonText = reloadButton.GetComponentInChildren<TextMeshProUGUI>();
+        timerText = timerImage.GetComponentInChildren<TextMeshProUGUI>();
+        audioSource = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -85,6 +92,7 @@ public class S_Sniper : MonoBehaviour
     {
         bullets--;
         bulletUI.RemoveBullet();
+        audioSource.Play();
 
         // Cast a ray from the middle of the reticle
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero, float.PositiveInfinity, LayerMask.GetMask("Shootable"));
@@ -94,6 +102,8 @@ public class S_Sniper : MonoBehaviour
         {
             hit.transform.gameObject.SendMessage("Shot");
         }
+
+        cameraScript.Fired();
     }
 
     // Called by S_Reload when the reload button is pressed and there are stakes carved
@@ -128,6 +138,8 @@ public class S_Sniper : MonoBehaviour
             tutorialButtonText.color = new Color(0.2f, 0.2f, 0.2f, Mathf.Lerp(tutorialButtonText.color.a, 0f, t));
             reloadButtonImage.color = new Color(0.906f, 0.337f, 0.165f, Mathf.Lerp(tutorialButtonImage.color.a, 0f, t));
             reloadButtonText.color = new Color(0.2f, 0.2f, 0.2f, Mathf.Lerp(tutorialButtonText.color.a, 0f, t));
+            timerImage.color = new Color(1, 1, 1, Mathf.Lerp(timerImage.color.a, 0f, t));
+            timerText.color = new Color(0.2f, 0.2f, 0.2f, Mathf.Lerp(timerText.color.a, 0f, t));
 
             for (int i = 0; i < bullets; i++)
             {
@@ -143,6 +155,8 @@ public class S_Sniper : MonoBehaviour
             tutorialButtonText.color = new Color(0.2f, 0.2f, 0.2f, Mathf.Lerp(tutorialButtonText.color.a, 1f, t));
             reloadButtonImage.color = new Color(0.906f, 0.337f, 0.165f, Mathf.Lerp(tutorialButtonImage.color.a, 1f, t));
             reloadButtonText.color = new Color(0.2f, 0.2f, 0.2f, Mathf.Lerp(tutorialButtonText.color.a, 1f, t));
+            timerImage.color = new Color(1, 1, 1, Mathf.Lerp(timerImage.color.a, 1f, t));
+            timerText.color = new Color(0.2f, 0.2f, 0.2f, Mathf.Lerp(timerText.color.a, 1f, t));
 
             for (int i = 0; i < bullets; i++)
             {

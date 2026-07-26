@@ -11,10 +11,6 @@ public class S_BulletCount : MonoBehaviour
     {
         lastBulletObject = transform.GetChild(0).gameObject;
         startingPos = transform.GetChild(0).position;
-
-        // Get bullet count up to 3
-        AddBullet();
-        AddBullet();
     }
 
     // Adds a new bullet sprite to the left of the last one (if there is one)
